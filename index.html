@@ -4,16 +4,56 @@
 	<meta charset="utf-8">
 	<script>
 		// TODO: create a handler
-    window.addEventListener("load", function(){
+		function setSearchEngine(){
+			//console.log("Link output");
+			let selectInput = document.querySelector("input[name=engine]:checked");
+			if(selectInput === null){
+				alert("All fields required");
+			}
+			var ele = document.getElementsByName('engine');
+			let actionURL;
+			let radioOutput;
+			for(i =0 ; i < ele.length; i++){
+				if(ele[i].checked){
+					console.log(ele[i].value);
+					radioOutput = ele[i].value;
+				}
+			}
+
+			if(radioOutput === "google"){
+				actionURL = "https://www.google.com/search";
+			}else if(radioOutput === "duckDuckGo"){
+				actionURL = "https://duckduckgo.com/";
+			}else if(radioOutput === "bing"){
+				actionURL = "https://www.bing.com/search";
+			}else if(radioOutput === "ask"){
+				actionURL = "https://www.ask.com/web/";
+			}
+			console.log("actionURL: " + actionURL);
+			let searchValue = document.getElementById('searchName').value;
+			console.log("searchValue:" + searchValue);
+			actionURL += "?q=" + searchValue;
+			let searchForm = document.getElementById('searchForm');
+			searchForm.setAttribute("action" , actionURL);			
+		}		
+          window.addEventListener("load", function(){
         // TODO: register the handler
-    });
+		let form = document.querySelector("form");
+        form.addEventListener("submit", setSearchEngine);	 
+   	    });		  
 	</script>
 </head>
-
 <body>
-
-	<form id="searchForm">
+	<form  id="searchForm">
     <!-- TODO: add form elements -->
+	<div id="result" style = "display:inline-flex">
+	<input type="text" id="searchName" value = "q" />
+    <input type="radio" name="engine"  value="google"/><label>Google</label>
+    <input type="radio" name="engine" value="duckDuckGo"/><label>DuckDuckGo</label>
+    <input type="radio" name="engine" value="bing"/><label>Bing</label>
+	<input type="radio" name="engine" value="ask"/><label>Ask</label>
+	<!--<button onclick="setSearchEngine()">Go!</button>-->
+	<button>Go!</button>
+	</div>
 	</form>
-
 </body>
